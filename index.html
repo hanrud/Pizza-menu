@@ -8,34 +8,30 @@
           crossorigin="anonymous">
 </head>
 
-<body ng-controller="menuController">
+<body ng-controller="pizzaController">
 <div class="container">
     <h1>Tony's Pizza</h1>
-    <h2>{{ model.title }}</h2>
-    <div ng-repeat="pizza in mainDish">
-        <label><input type="radio" name="category" ng-click="changeMainDish(pizza)"> {{ pizza.name }} </label>
-    </div>
 
-    <div>
-        <h3>Selected Item</h3>
-        <pre>{{ mainDish.name }}</pre>
+    <h2>{{model.title}}</h2>
+    <h3>Topping Search</h3>
+    <input type="text" class="form-control" ng-model="model.search">
+    <div ng-hide="model.search">
+        Enter the search criteria above.
+    </div>
+    <div ng-show="model.search" ng-repeat="t in model.availableToppings |filter:model.search">
+        <span ng-click="addTopping(t)">{{ t }}</span>
     </div>
     <div>
-        <h3>Special Instructions</h3>
-        <textarea class="form-control" ng-model="model.specialInstructions"></textarea>
-    </div>
-    <div>
-        <h3>Order Summary</h3>
-        <pre>{{ mainDish.name }} - {{ mainDish.price | currency }} - {{ model.specialInstructions }}</pre>
-    </div>
-    <div>
-        <button type="submit" class="btn btn-default">Submit</button>
+        <h3>Selected Toppings</h3>
+        <div ng-repeat="t in model.toppings">
+            {{ t }}
+        </div>
     </div>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
-<script src="app/app.js"></script>
-<script src="app/menuController.js"></script>
+<script src="./app/app.js"></script>
+<script src="./app/menuController.js"></script>
 </body>
 
 </html>
