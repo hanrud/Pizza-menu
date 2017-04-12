@@ -8,11 +8,18 @@
           crossorigin="anonymous">
 </head>
 
-<body ng-controller="pizzaController">
+<body ng-controller="menuController">
 <div class="container">
     <h1>Tony's Pizza</h1>
+    <h2>{{ model.title }}</h2>
+    <div ng-repeat="pizza in mainDish">
+        <label><input type="radio" name="category" ng-click="changeMainDish(pizza)"> {{ pizza.name }} </label>
+    </div>
+    <div>
+        <h3>Selected Item</h3>
+        <pre>{{ mainDish.name }}</pre>
+    </div>
 
-    <h2>{{model.title}}</h2>
     <h3>Topping Search</h3>
     <input type="text" class="form-control" ng-model="model.search">
     <div ng-hide="model.search">
@@ -22,10 +29,21 @@
         <span ng-click="addTopping(t)">{{ t }}</span>
     </div>
     <div>
-        <h3>Selected Toppings</h3>
-        <div ng-repeat="t in model.toppings">
-            {{ t }}
-        </div>
+        <h3 ng-if="model.toppings.length > 0">Selected Toppings</h3>
+        <div ng-repeat="t in model.toppings">{{ t }}</div>
+    </div>
+
+    <div>
+
+        <h3>Special Instructions</h3>
+        <textarea class="form-control" ng-model="model.specialInstructions"></textarea>
+    </div>
+    <div>
+        <h3>Order Summary</h3>
+        <pre>{{ mainDish.name }} - {{ mainDish.price | currency }} - {{ model.specialInstructions }}</pre>
+    </div>
+    <div>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </div>
 </div>
 
