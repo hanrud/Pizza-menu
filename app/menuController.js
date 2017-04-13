@@ -11,7 +11,8 @@ app.controller('menuController', [
         $scope.model = {
             title: 'Pizza Builder',
             availableToppings: ['Cheese', 'Pepperoni', 'Bacon', 'Pineapple', 'Sausage', 'Ham', 'Chicken', 'Mushrooms', 'Onion', 'Olives', 'Green Peppers'],
-            toppings: []
+            toppings: [],
+            toppingPrice: 0.5
         };
 
         $scope.mainDish = [{
@@ -22,20 +23,21 @@ app.controller('menuController', [
             price: 12
         }, {
             name: 'Margherita Pizza',
-            price: 12
+            price: 13
         }, {
             name: 'BBQ Chicken Pizza',
-            price: 12
+            price: 12.5
         }, {
             name: 'Combo Pizza',
-            price: 12
+            price: 11.5
         }];
 
 
 
         $scope.addTopping = function (topping) {
             $scope.model.toppings.push(topping);
-            $scope.model.search = null;
+            $scope.mainDish.price += $scope.model.toppingPrice;
+            // $scope.model.search = null;
         }
     }
 

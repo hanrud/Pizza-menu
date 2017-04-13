@@ -13,7 +13,8 @@
     <h1>Tony's Pizza</h1>
     <h2>{{ model.title }}</h2>
     <div ng-repeat="pizza in mainDish">
-        <label><input type="radio" name="category" ng-click="changeMainDish(pizza)"> {{ pizza.name }} </label>
+        <label><input type="radio" name="category" ng-click="changeMainDish(pizza)"> {{ pizza.name }} {{ pizza.price |
+            currency }}</label>
     </div>
     <div>
         <h3>Selected Item</h3>
@@ -21,26 +22,28 @@
     </div>
 
     <h3>Topping Search</h3>
-    <input type="text" class="form-control" ng-model="model.search">
-    <div ng-hide="model.search">
-        Enter the search criteria above.
+    <p>Here you can add some toppings. Each costs {{ model.toppingPrice | currency }}.</p>
+    <div ng-repeat="t in model.availableToppings ">
+        <input type="checkbox" ng-click="addTopping(t)">{{ t }}</input>
     </div>
-    <div ng-show="model.search" ng-repeat="t in model.availableToppings |filter:model.search">
-        <span ng-click="addTopping(t)">{{ t }}</span>
-    </div>
-    <div>
-        <h3 ng-if="model.toppings.length > 0">Selected Toppings</h3>
-        <div ng-repeat="t in model.toppings">{{ t }}</div>
-    </div>
+    <!--<div>-->
+    <!--<h3 ng-if="model.toppings.length > 0">Selected Toppings</h3>-->
+    <!--<div ng-repeat="t in model.toppings">{{ t }}</div>-->
+    <!--</div>-->
 
     <div>
-
         <h3>Special Instructions</h3>
         <textarea class="form-control" ng-model="model.specialInstructions"></textarea>
     </div>
     <div>
         <h3>Order Summary</h3>
-        <pre>{{ mainDish.name }} - {{ mainDish.price | currency }} - {{ model.specialInstructions }}</pre>
+        <p ng-hide="mainDish.name">You haven't choose anything yet</p>
+        <div ng-show="mainDish.name">
+            <p> {{ mainDish.name }} <span ng-if="model.toppings.length > 0">with <span ng-repeat="t in model.toppings">{{ t }} </span></span></p>
+            <p>{{ model.specialInstructions }}</p>
+            <p> {{ mainDish.price | currency }} </p>
+        </div>
+        <p ng-show="mainDish.name">
     </div>
     <div>
         <button type="submit" class="btn btn-primary">Submit</button>
